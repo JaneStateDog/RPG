@@ -19,7 +19,8 @@ enum mobData {
 //Define mobs (enum that holds the monster names. Use this to index the monsters array)
 enum mobs {
 	goblin,
-	leg
+	leg,
+	spider
 }
 
 //Function to create monsters
@@ -42,6 +43,7 @@ function monster_create(ID, maxHP, maxDef, maxStr, sprIdle, sprRun, sprAttack, m
 //Create monsters
 monster_create(mobs.goblin, 10, 3, 2.25, sGoblinIdle, sGoblinRun, sGoblinIdle, 1.5, "goblin", 4);
 monster_create(mobs.leg, 12, 2, 2, sLegIdle, sLegRun, sLegIdle, 1, "leg", 3);
+monster_create(mobs.spider, 30, 4, 8, sSpiderIdle, sSpiderIdle, sSpiderIdle, 0, "spider", 6);
 
 
 //Define monster groups
@@ -53,7 +55,8 @@ enum mobGroups {
 	goblin,
 	leg,
 	goblinLeg1,
-	goblinLeg2
+	goblinLeg2,
+	spider
 }
 
 //Function to create monster groups (first argument is the ID for the group (reference mob groups enum above) and the rest of the arugments are the mob IDs for that group)
@@ -66,6 +69,7 @@ monster_group_create(mobGroups.goblin, mobs.goblin, mobs.goblin);
 monster_group_create(mobGroups.leg, mobs.leg, mobs.leg);
 monster_group_create(mobGroups.goblinLeg1, mobs.goblin, mobs.leg, mobs.goblin);
 monster_group_create(mobGroups.goblinLeg2, mobs.leg, mobs.goblin, mobs.leg);
+monster_group_create(mobGroups.spider, mobs.spider);
 
 
 

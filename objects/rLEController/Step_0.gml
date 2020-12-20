@@ -76,7 +76,7 @@ if (keyCtrl and keySPressed) {
 	
 	//Write the buffer, save it to file, then delete the buffer
 	buffer_write(buffer, buffer_string, str);
-	buffer_save(buffer, lvlName + ".lvl");
+	buffer_save(buffer, "levels/" + lvlName + ".lvl");
 	buffer_delete(buffer);
 }
 

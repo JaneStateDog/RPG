@@ -1,2 +1,2 @@
-/// @description Insert description here
-// You can write your code in this editor
+//Stop song on destroy
+audio_stop_sound(song);

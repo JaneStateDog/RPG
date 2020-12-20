@@ -15,7 +15,7 @@
   "VTile": false,
   "For3D": false,
   "width": 48,
-  "height": 32,
+  "height": 33,
   "textureGroupId": {
     "name": "Default",
     "path": "texturegroups/Default",
@@ -87,7 +87,7 @@
     "backdropXOffset": 0.0,
     "backdropYOffset": 0.0,
     "xorigin": 12,
-    "yorigin": 17,
+    "yorigin": 16,
     "eventToFunction": {},
     "eventStubScript": null,
     "parent": {"name":"sPlayerSwordStrike","path":"sprites/sPlayerSwordStrike/sPlayerSwordStrike.yy",},

@@ -2,7 +2,19 @@
 if (surface_exists(platSurf)) {
 	surface_set_target(application_surface);
 	
+	
+	//Set outline shader
+	shader_set(shOutline);
+	shader_set_uniform_f(upixelW, texelW);
+	shader_set_uniform_f(upixelH, texelH);
+	
+	//Draw outline border thingy
 	draw_sprite(sPlatOutline, 0, platSurfX - 3, platSurfY - 3);
+	
+	//Reset shader
+	shader_reset();
+	
+	
 	draw_surface(platSurf, platSurfX, platSurfY);
 	part_system_drawit(particlePlatSystem);
 	

@@ -29,6 +29,9 @@ firstRoom = ROOMSTART;
 alarm_set(0, 1);
 
 
-//Define volume
+//Define volume variabkes
 globalvar volume;
-volume = 1;
+volume = 0.8;
+
+globalvar musicVolume;
+musicVolume = 0.85;

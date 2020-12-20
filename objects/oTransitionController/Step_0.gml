@@ -4,7 +4,10 @@ switch (transition) {
 	case transitions.fromBattle: //Leave battle
 		diagonal_move(rMain);
 		
-		if (instance_exists(oBattleOptions)) with (oBattleOptions) destinationY = belowScreenDest;
+		if (instance_exists(oBattleOptions)) with (oBattleOptions) {
+			destinationY = belowScreenDest;
+			canSelect = false;
+		}
 		if (instance_exists(oBattleEntityController)) oBattleEntityController.destinationEntityX = 0;
 		
 		break;

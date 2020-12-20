@@ -43,3 +43,8 @@ drawY = y;
 //Define move y for possible animations
 moveY = 0;
 oldDrawY = drawY;
+
+
+//Define variables for outline shader
+upixelH = shader_get_uniform(shOutline, "pixelH");
+upixelW = shader_get_uniform(shOutline, "pixelW");

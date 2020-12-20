@@ -1,2 +1,3 @@
-/// @description Insert description here
-// You can write your code in this editor
+//Say that the alarm is done and the dialogue can continue
+isAlarmDone = true;
+canContinueDialogue = true;

@@ -29,26 +29,18 @@ if (array_length(queuedMonsters) != array_length(monsterEntities)) for (i = 0; i
 }
 
 
-//Define monster positions
-var tempHeight = room_height / (array_length(monsterEntities) + 1);
-var monsterY = room_height - tempHeight;
-var maxMonsterY = tempHeight;
-
-//Define party positions
-var tempHeight = room_height / (array_length(memberEntities) + 1);
-var partyY = room_height - tempHeight;
-var maxPatyY = tempHeight;
-
 //Move every member entity into their proper positions
-var divValue = array_length(memberEntities);
 for (i = 0; i < array_length(memberEntities); i++) {
-	memberEntities[i].x = room_width - entityX;
-	memberEntities[i].y = maxPatyY + (((partyY - maxPatyY) / divValue) * i);
+	memberEntities[i].x = room_width - entityX - (sprite_get_width(members[party[memberEntities[i].ID]][memberData.sprIdle]) / 2);
+	memberEntities[i].y = (room_height / (array_length(memberEntities) + 1)) * (i + 1);
+	
+	memberEntities[i].layer = layer_get_id("TopEntities");
 }
 
 //Move ever monster entity into their proper positions
-var divValue = array_length(monsterEntities);
 for (i = 0; i < array_length(monsterEntities); i++) {
-	monsterEntities[i].x = entityX;
-	monsterEntities[i].y = maxMonsterY + (((monsterY - maxMonsterY) / divValue) * i);
+	monsterEntities[i].x = entityX + (sprite_get_width(monsters[queuedMonsters[monsterEntities[i].ID]][mobData.sprIdle]) / 2);
+	monsterEntities[i].y = (room_height / (array_length(monsterEntities) + 1)) * (i + 1);
+	
+	monsterEntities[i].layer = layer_get_id("BottomEntities");
 }

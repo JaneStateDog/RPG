@@ -65,9 +65,9 @@ function destroy_level() {
 //Function to load level into room
 function load_level(lvlName) {
 	//If the level exists load it
-	if (file_exists(lvlName + ".lvl")) {
+	if (file_exists("levels/" + lvlName + ".lvl")) {
 		//Put the buffer inside the file and into a string and then delete the buffer
-		var buffer = buffer_load(lvlName + ".lvl");
+		var buffer = buffer_load("levels/" + lvlName + ".lvl");
 		var str = buffer_read(buffer, buffer_string);
 		buffer_delete(buffer);
 		
