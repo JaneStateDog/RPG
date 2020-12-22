@@ -2,7 +2,7 @@
 switch (transition) {
 	case transitions.toBattle: diagonal_move(rBattle); break; //Go to battle
 	case transitions.fromBattle: //Leave battle
-		diagonal_move(rMain);
+		diagonal_move(overworldIn);
 		
 		if (instance_exists(oBattleOptions)) with (oBattleOptions) {
 			destinationY = belowScreenDest;

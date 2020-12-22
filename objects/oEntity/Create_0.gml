@@ -17,6 +17,7 @@ str = 0;
 
 defending = false;
 
+isAttacking = false;
 
 //Set alarm to gather the needed values
 alarm_set(0, 1);
@@ -43,8 +44,3 @@ drawY = y;
 //Define move y for possible animations
 moveY = 0;
 oldDrawY = drawY;
-
-
-//Define variables for outline shader
-upixelH = shader_get_uniform(shOutline, "pixelH");
-upixelW = shader_get_uniform(shOutline, "pixelW");

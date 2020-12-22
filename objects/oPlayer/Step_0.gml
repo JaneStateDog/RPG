@@ -2,76 +2,69 @@
 move_wrap(true, true, 0);
 
 
-//Only move and do attacks if can move
-if (canMove) {
-	///Movement
-	//Move the player using the keys and move speed
-	moveX = keyRight - keyLeft;
-	moveY = keyDown - keyUp;
+///Movement
+//Move the player using the keys and move speed
+moveX = keyRight - keyLeft;
+moveY = keyDown - keyUp;
 
-	//If moving use some point direction stuff to make sure diagonal movement
-	//is not faster than it should be
-	//(P.S. I only half understand this code because I stole it from YouTube and I don't
-	//really care enough to actually pay attention to it)
-	if (moveX != 0 or moveY != 0) {
-		moveDir = point_direction(0, 0, moveX, moveY);
+//If moving use some point direction stuff to make sure diagonal movement
+//is not faster than it should be
+//(P.S. I only half understand this code because I stole it from YouTube and I don't
+//really care enough to actually pay attention to it)
+if (moveX != 0 or moveY != 0) {
+	moveDir = point_direction(0, 0, moveX, moveY);
 	
-		moveX = lengthdir_x(moveSpeed, moveDir);
-		moveY = lengthdir_y(moveSpeed, moveDir);
-	}
+	moveX = lengthdir_x(moveSpeed, moveDir);
+	moveY = lengthdir_y(moveSpeed, moveDir);
+}
 
 
-	//If moving change state to running
-	if (state != playerStates.swordStriking) if (moveX != 0 or moveY != 0) state = playerStates.running;
-	else state = playerStates.idle;
+//If moving change state to running
+if (state != playerStates.swordStriking) if (moveX != 0 or moveY != 0) state = playerStates.running;
+else state = playerStates.idle;
 
 
-	//Do collision
-	//Horizontal
-	if (place_meeting(x + moveX, y, oWall)) {
-		while (!place_meeting(x + sign(moveX), y, oWall)) x += sign(moveX);
-		moveX = 0;
-	}
+//Do collision
+//Horizontal
+if (place_meeting(x + moveX, y, oWall)) {
+	while (!place_meeting(x + sign(moveX), y, oWall)) x += sign(moveX);
+	moveX = 0;
+}
 
-	//Move horizontally
-	if (state != playerStates.swordStriking) x += round(moveX); //Make sure we're not striking
+//Move horizontally
+if (state != playerStates.swordStriking and canMove) x += round(moveX); //Make sure we're not striking and we can move
 
-	//Vertical
-	if (place_meeting(x, y + moveY, oWall)) {
-		while (!place_meeting(x, y + sign(moveY), oWall)) y += sign(moveY);
-		moveY = 0;
-	}
+//Vertical
+if (place_meeting(x, y + moveY, oWall)) {
+	while (!place_meeting(x, y + sign(moveY), oWall)) y += sign(moveY);
+	moveY = 0;
+}
 	
-	//Move vertically
-	if (state != playerStates.swordStriking) y += round(moveY); //Make sure we're not striking
+//Move vertically
+if (state != playerStates.swordStriking and canMove) y += round(moveY); //Make sure we're not striking and we can move
 
 
-	//On space press do sword strike
-	if (keySpacePressed and state != playerStates.swordStriking) {
+//On space press do sword strike if not talking to NPC
+if (keySpacePressed and state != playerStates.swordStriking) {
+	mask_index = sPlayerNPCHitbox;
+	
+	if (!place_meeting(x, y, oNPC))  {
 		state = playerStates.swordStriking;
 		image_index = 0; //Reset animation
 	}
+	
+	
+	mask_index = sPlayerDefaultHitbox;
 }
 
 
 //Do things depending on the state
 switch (state) {
-	case playerStates.idle:
-		//Change sprite and mask
-		sprite_index = sPlayerIdle;
-		mask_index = sPlayerIdle
-		
-		break;
-	case playerStates.running:
-		//Change sprite and mask
-		sprite_index = sPlayerRun;
-		mask_index = sPlayerRun;
-	
-		break;
+	case playerStates.idle: sprite_index = sPlayerIdle; break;
+	case playerStates.running: sprite_index = sPlayerRun; break;
 	case playerStates.swordStriking:
-		//Change sprite and mask
+		//Change sprite
 		sprite_index = sPlayerSwordStrike;
-		mask_index = sPlayerSwordStrike;
 		
 		//Change state to idle if animation is over
 		if (round(image_index) == image_number) state = playerStates.idle;

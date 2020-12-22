@@ -113,7 +113,7 @@
   ],
   "parent": {
     "name": "Leg",
-    "path": "folders/Sprites/Monsters/Leg.yy",
+    "path": "folders/Sprites/NPCs/Monsters/Leg.yy",
   },
   "resourceVersion": "1.0",
   "name": "sLegRun",

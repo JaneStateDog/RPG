@@ -8,7 +8,7 @@ enum msgData {
 
 
 //Define portrait variables
-portraitSprite = 0;
+portraitSprite = noone;
 portraitIndex = 0;
 
 
@@ -63,17 +63,11 @@ enum modifiers2 {
 }
 
 
-
-//Define variables for outline shader
-upixelH = shader_get_uniform(shOutline, "pixelH");
-upixelW = shader_get_uniform(shOutline, "pixelW");
-
-function outline_shader_set(spr) {
+//Function to turn on outline shader
+function outline_shader_set() {
 	shader_reset();
 	shader_set(shOutline);
 	
-	texelW = texture_get_texel_width(sprite_get_texture(spr, 0));
-	texelH = texture_get_texel_height(sprite_get_texture(spr, 0));
-	shader_set_uniform_f(upixelW, texelW);
-	shader_set_uniform_f(upixelH, texelH);
+	shader_set_uniform_f(upixelW, texelSize);
+	shader_set_uniform_f(upixelH, texelSize);
 }

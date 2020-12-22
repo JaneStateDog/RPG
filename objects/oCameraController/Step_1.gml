@@ -24,8 +24,11 @@ if (window_get_width() != oldWinWidth or window_get_height() != oldWinHeight) {
 	//Set the old window size so we can know when the window changes
 	oldWinWidth = window_get_width();
 	oldWinHeight = window_get_height();
-	
-	
-	//Center the window
+}
+
+
+//If we have not centered the window then do it
+if (!hasCenteredWindow) {
 	window_center();
+	hasCenteredWindow = true;
 }

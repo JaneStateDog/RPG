@@ -1,6 +1,18 @@
 //Define entity x and it's destination
 entityX = 0;
 destinationEntityX = 130;
+ogDestEntityX = destinationEntityX;
+
+widestSprite = 0;
+
+function set_widest_sprite(spr) {
+	if (sprite_get_width(spr) > widestSprite) {
+		widestSprite = sprite_get_width(spr);
+
+		ogDestEntityX += widestSprite / 4;
+		if (destinationEntityX != ogDestEntityX) destinationEntityX += widestSprite / 4;
+	}
+}
 
 
 //Define member entities
@@ -20,7 +32,12 @@ function place_member(ID) {
 	member.ID = ID;
 	
 	//Put the member in the member entities array
-	memberEntities[array_length(memberEntities)] = member;
+	var place = array_length(memberEntities);
+	memberEntities[place] = member;
+	
+
+	//Set entity x using the widest sprite in the room so far
+	set_widest_sprite(members[party[ID]][memberData.sprIdle]);
 }
 
 //Place the party member entities in the room
@@ -42,6 +59,10 @@ function place_monster(ID) {
 	
 	//Add the monster into the monster entities array
 	monsterEntities[i] = mob;
+	
+	
+	//Set entity x using the widest sprite in the room so far
+	set_widest_sprite(monsters[queuedMonsters[ID]][mobData.sprIdle]);
 }
 
 //Place the monster entities in the room

@@ -1,5 +1,5 @@
 //Reset draw x and y location if not attacking
-if (oBattleOptions.state != states.attacking) {
+if (!isAttacking) {
 	drawX = x;
 	drawY = y;
 }

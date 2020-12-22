@@ -9,12 +9,12 @@ var textBoxX = (cameraWidth / 2) - (textBoxWidth / 2);
 
 
 //Draw the diaglogue box
-outline_shader_set(sDialogueBox);
+outline_shader_set();
 draw_sprite(sDialogueBox, 0, textBoxX, diaBoxY);
 
 //Draw portrait
 shader_reset();
-if (portraitSprite != "") draw_sprite(portraitSprite, portraitIndex, textBoxX + 8, diaBoxY + 3);
+if (portraitSprite != noone) draw_sprite(portraitSprite, portraitIndex, textBoxX + 8, diaBoxY + 3);
 
 //Draw name text box and name
 if (name != "") {
@@ -24,13 +24,10 @@ if (name != "") {
 	var nameBoxX = textBoxX - 4;
 	var nameBoxY = diaBoxY - 18;
 	
-	outline_shader_set(sNameBoxSide);
+	outline_shader_set();
+	
 	draw_sprite(sNameBoxSide, 0, nameBoxX - 3, nameBoxY + 1);
-	
-	outline_shader_set(sNameBoxSide);
 	draw_sprite(sNameBoxSide, 0, nameBoxX + nameBoxWidth, nameBoxY + 1);
-	
-	outline_shader_set(sNameBoxCenter);
 	draw_sprite_stretched(sNameBoxCenter, 0, nameBoxX, nameBoxY, nameBoxWidth, sprite_get_height(sNameBoxCenter));
 	
 	
@@ -44,7 +41,7 @@ if (name != "") {
 
 //Draw message
 var textX = textBoxX + (lineSpace / 2);
-if (portraitSprite != "") textX += sprite_get_width(portraitSprite) + 4;
+if (portraitSprite != noone) textX += sprite_get_width(portraitSprite) + 4;
 
 var lineOn = 0;
 var charIndent = 0;

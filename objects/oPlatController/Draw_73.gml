@@ -5,8 +5,8 @@ if (surface_exists(platSurf)) {
 	
 	//Set outline shader
 	shader_set(shOutline);
-	shader_set_uniform_f(upixelW, texelW);
-	shader_set_uniform_f(upixelH, texelH);
+	shader_set_uniform_f(upixelW, texelSize);
+	shader_set_uniform_f(upixelH, texelSize);
 	
 	//Draw outline border thingy
 	draw_sprite(sPlatOutline, 0, platSurfX - 3, platSurfY - 3);

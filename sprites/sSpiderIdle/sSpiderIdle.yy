@@ -85,7 +85,7 @@
   ],
   "parent": {
     "name": "Spider",
-    "path": "folders/Sprites/Monsters/Spider.yy",
+    "path": "folders/Sprites/NPCs/Monsters/Spider.yy",
   },
   "resourceVersion": "1.0",
   "name": "sSpiderIdle",

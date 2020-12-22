@@ -17,6 +17,6 @@ void main() {
 	alpha += ceil(texture2D(gm_BaseTexture, v_vTexcoord + offsetY).a);
 	alpha += ceil(texture2D(gm_BaseTexture, v_vTexcoord - offsetY).a);
 
-    gl_FragColor = v_vColour * texture2D( gm_BaseTexture, v_vTexcoord );
+    gl_FragColor = v_vColour * texture2D(gm_BaseTexture, v_vTexcoord);
 	gl_FragColor.a = alpha;
 }

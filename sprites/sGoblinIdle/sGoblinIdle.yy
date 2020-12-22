@@ -85,7 +85,7 @@
   ],
   "parent": {
     "name": "Goblin",
-    "path": "folders/Sprites/Monsters/Goblin.yy",
+    "path": "folders/Sprites/NPCs/Monsters/Goblin.yy",
   },
   "resourceVersion": "1.0",
   "name": "sGoblinIdle",

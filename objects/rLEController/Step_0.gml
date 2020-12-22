@@ -82,3 +82,8 @@ if (keyCtrl and keySPressed) {
 
 //Load a new level
 if (keyCtrl and keyLPressed) if (show_question("Load level?")) load_level(get_string("Level name:", ""));
+
+
+
+//If the player is over a spike make them red to show the fact they are on a spike
+if (instance_exists(oPlatPlayer)) with (oPlatPlayer) if (place_meeting(x, y, oPlatSpikes)) image_blend = c_red; else image_blend = c_white;

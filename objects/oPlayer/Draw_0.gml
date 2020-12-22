@@ -1,11 +1,10 @@
 //Set outline shader
 shader_set(shOutline);
-shader_set_uniform_f(upixelW, texelW);
-shader_set_uniform_f(upixelH, texelH);
+shader_set_uniform_f(upixelW, texelSize);
+shader_set_uniform_f(upixelH, texelSize);
 
-//Draw self but make sure the x and y is rounded
-draw_sprite_ext(sprite_index, round(image_index), round(x), round(y),
-				image_xscale, image_yscale, image_angle, image_blend, image_alpha);
+//Draw self
+draw_self();
 				
 //Reset shader
 shader_reset();

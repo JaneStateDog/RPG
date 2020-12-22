@@ -20,7 +20,8 @@ enum mobData {
 enum mobs {
 	goblin,
 	leg,
-	spider
+	spider,
+	mouthCat
 }
 
 //Function to create monsters
@@ -44,6 +45,7 @@ function monster_create(ID, maxHP, maxDef, maxStr, sprIdle, sprRun, sprAttack, m
 monster_create(mobs.goblin, 10, 3, 2.25, sGoblinIdle, sGoblinRun, sGoblinIdle, 1.5, "goblin", 4);
 monster_create(mobs.leg, 12, 2, 2, sLegIdle, sLegRun, sLegIdle, 1, "leg", 3);
 monster_create(mobs.spider, 30, 4, 8, sSpiderIdle, sSpiderIdle, sSpiderIdle, 0, "spider", 6);
+monster_create(mobs.mouthCat, 5, 1, 4, sMouthCatIdle, sMouthCatIdle, sMouthCatBite, 2, "mouthCat", 0);
 
 
 //Define monster groups
@@ -69,7 +71,7 @@ monster_group_create(mobGroups.goblin, mobs.goblin, mobs.goblin);
 monster_group_create(mobGroups.leg, mobs.leg, mobs.leg);
 monster_group_create(mobGroups.goblinLeg1, mobs.goblin, mobs.leg, mobs.goblin);
 monster_group_create(mobGroups.goblinLeg2, mobs.leg, mobs.goblin, mobs.leg);
-monster_group_create(mobGroups.spider, mobs.spider);
+monster_group_create(mobGroups.spider, mobs.mouthCat, mobs.spider, mobs.mouthCat,);
 
 
 
@@ -133,11 +135,22 @@ globalvar queuedMonsters;
 queuedMonsters = [];
 
 
+//Define queued monster group
+globalvar queuedMonsterGroup;
+queuedMonsterGroup = -1;
+
+
 
 //Function to inact battle
 function battle_start(mobGroupID) {
+	//Save the room we are in
+	overworldIn = room;
+	
 	//Put the mob group into the queued monsters array then go to the battle room
 	if (mobGroupID != -1) queuedMonsters = monsterGroups[mobGroupID];
+	
+	//Put the monster group ID into the queued monster group
+	queuedMonsterGroup = mobGroupID;
 	
 	//Do transition to move to the battle room
 	do_transition(transitions.toBattle);
@@ -192,6 +205,8 @@ function player_attack(player, monster) {
 					
 		//Do death effects
 		death_effects(monster);
+		
+		attackState = attackStates.runBack;
 	} else {
 		//If not killed just do damage animation and camera shake
 		with (monster) do_damage_animation();
@@ -225,12 +240,6 @@ function monster_attack(monster, player) {
 		//If not killed just do damage animation and camera shake
 		with (player) do_damage_animation();
 		camera_shake(2, 8);
-		
-		//If this was from spike damage then run back
-		if (spikeAttack) {
-			attackState = attackStates.runBack;
-			spikeAttack = false;
-		}
 	}
 }
 
@@ -248,20 +257,28 @@ function attack_entity(hitFrame, attacker, victim, didHit) {
 		didHit = true;
 	}
 					
-	//If we have hit this frame and the animation is over, reset attack hit count and remove from queued attacked
+	//If we have hit and the animation is over, remove from queued attacks
 	if (didHit and round(attacker.image_index) == sprite_get_number(attacker.sprite_index)) {
 		didHit = false;
 		
 		//Go to idle animation and subtract from queued attacks
 		if (attacker.type == entityType.member) {
 			attacker.sprite_index = members[party[attacker.ID]][memberData.sprIdle];
+			attacker.image_index = 0;
+			
 			queuedAttacks--;
 		} else if (attacker.type == entityType.monster) {
 			attacker.sprite_index = monsters[queuedMonsters[attacker.ID]][mobData.sprIdle];
 			queuedMonsterAttacks--;
+			
+			//If this was from spike damage then run back
+			if (spikeAttack) {
+				attackState = attackStates.runBack;
+				spikeAttack = false;
+			}
 		}
 		
-		//If the victim is dead then leave the attacking state
+		//If the victim is dead run back
 		if (victim.HP <= 0) attackState = attackStates.runBack;
 	}
 	
@@ -309,13 +326,21 @@ function bounce_attack_entity(attacker, victim, didHit) {
 		//Go to idle animation and subtract from queued attacks
 		if (attacker.type == entityType.member) {
 			attacker.sprite_index = members[party[attacker.ID]][memberData.sprIdle];
+			attacker.image_index = 0;
+			
 			queuedAttacks--;
 		} else if (attacker.type == entityType.monster) {
 			attacker.sprite_index = monsters[queuedMonsters[attacker.ID]][mobData.sprIdle];
 			queuedMonsterAttacks--;
+			
+			//If this was from spike damage then run back
+			if (spikeAttack) {
+				attackState = attackStates.runBack;
+				spikeAttack = false;
+			}
 		}
 		
-		//If the victim is dead then leave the attacking state
+		//If the victim is dead run back
 		if (victim.HP <= 0) attackState = attackStates.runBack;
 	}
 	

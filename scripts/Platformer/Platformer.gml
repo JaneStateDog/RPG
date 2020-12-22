@@ -49,7 +49,8 @@ function draw_plat() {
 		drawY = y - platCamY + (platSurfHeight / 2);
 	}
 
-	draw_sprite_ext(sprite_index, round(image_index), round(drawX), round(drawY),
+	//Draw self but make sure the x and y is rounded
+	draw_sprite_ext(sprite_index, image_index, round(drawX), round(drawY),
 					image_xscale, image_yscale, image_angle, image_blend, image_alpha);
 				
 	if (surface_exists(platSurf)) surface_reset_target();
