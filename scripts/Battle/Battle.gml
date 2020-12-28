@@ -8,10 +8,13 @@ enum mobData {
 	maxHP,
 	maxDef,
 	maxStr,
+	
 	sprIdle,
 	sprRun,
 	sprAttack,
+	
 	moveSpeed,
+	
 	platLevel,
 	attackSpeed
 }
@@ -75,6 +78,7 @@ monster_group_create(mobGroups.spider, mobs.mouthCat, mobs.spider, mobs.mouthCat
 
 
 
+
 //Define max level
 globalvar maxLevel;
 maxLevel = 100;
@@ -86,13 +90,17 @@ members = [];
 //Define member data (enum to hold all members' data such as defense and strength. Use this for indexing the array
 //inside the members array)
 enum memberData {
+	name,
+	
 	level,
+	
 	maxHP,
 	HP,
 	maxDef,
 	def,
 	maxStr,
 	str,
+	
 	sprIdle,
 	sprRun,
 	sprDefend,
@@ -106,8 +114,11 @@ enum memberNames {
 }
 
 //Function to create members
-function member_create(ID, level, maxHP, maxDef, maxStr, sprIdle, sprRun, sprDefend, sprAttack) {
-	if (level <= maxLevel) members[ID][memberData.level] = level;
+function member_create(name, ID, level, maxHP, maxDef, maxStr, sprIdle, sprRun, sprDefend, sprAttack) {
+	members[ID][memberData.name] = name;
+	
+	if (level <= maxLevel) members[ID][memberData.level] = level; else members[ID][memberData.level] = 1;
+	
 	members[ID][memberData.maxHP] = maxHP;
 	members[ID][memberData.HP] = maxHP;
 	members[ID][memberData.maxDef] = maxDef;
@@ -122,8 +133,8 @@ function member_create(ID, level, maxHP, maxDef, maxStr, sprIdle, sprRun, sprDef
 }
 
 //Create the members
-member_create(memberNames.player, 1, 15, 2, 3.5, sPlayerIdle, sPlayerRun, sPlayerDefend, sPlayerSwordStrike);
-member_create(memberNames.John, 1, 10, 2, 2.5, sPlayerIdle, sPlayerRun, sPlayerDefend, sPlayerIdle); //Put John in FOR TESTING PURPOSES
+member_create("Player", memberNames.player, 1, 15, 2, 3.5, sPlayerIdle, sPlayerRun, sPlayerDefend, sPlayerSwordStrike);
+member_create("John", memberNames.John, 1, 10, 2, 2.5, sPlayerIdle, sPlayerRun, sPlayerDefend, sPlayerIdle); //Put John in FOR TESTING PURPOSES
 
 //Define party array (this array stores the current party)
 globalvar party;
@@ -138,6 +149,104 @@ queuedMonsters = [];
 //Define queued monster group
 globalvar queuedMonsterGroup;
 queuedMonsterGroup = -1;
+
+
+
+
+//Define items (array  that holds all items and their data
+globalvar items;
+items = [];
+
+//Enum for all item names
+enum itemNames {
+	potion,
+	dmg
+}
+
+//Enum for all item data and is used for indexing the items array
+enum itemData {
+	name,
+	sprite,
+	description,
+	
+	onlyInBattle //This is if the item can only be used in battle or not
+}
+
+//Function to create items
+function item_create(name, ID, spr, des, onlyInBattle) {
+	items[ID][itemData.name] = name;
+	items[ID][itemData.sprite] = spr;
+	items[ID][itemData.description] = des;
+	
+	items[ID][itemData.onlyInBattle] = onlyInBattle;
+}
+
+//Create items
+item_create("Potion", itemNames.potion, sPixel, "Heals 2 HP", false);
+item_create("Damage", itemNames.dmg, sPixel, "Does 2 damage to an enemy", true);
+
+//Define item inventory (this holds what items are currently in the player's inventory)
+globalvar itemInventory;
+itemInventory = [[-1, 0]];
+
+//Enum used for indexing the second dimension of item inventory (used for things like getting the item ID and how many the player has)
+enum iIData {
+	ID,
+	amount
+}
+
+//Function to add a item to the player item inventory
+function add_item(item, amount) {
+	var failed = true;
+	
+	//Try and add the inputted amount to the existing item in the inventory but if that item is not in the inventory then
+	//find a new/empty slot to put it in
+	for (i = 0; i < array_length(itemInventory); i++) if (itemInventory[i][iIData.ID] == item) {
+		itemInventory[i][iIData.amount] += amount;
+		failed = false;
+			
+		break;
+	}
+	
+	if (failed) for (i = 0; i < array_length(itemInventory); i++) {
+		//If we didn't end up finding an empty slot than add it to the end of the array
+		if (i == array_length(itemInventory) - 1) {
+			var temp = i + 1;
+			
+			itemInventory[temp][iIData.ID] = item;
+			itemInventory[temp][iIData.amount] = amount;
+			
+			break;
+		}
+		
+		//Add item to empty slot if we find one
+		if (itemInventory[i][iIData.ID] == -1) {
+			itemInventory[i][iIData.ID] = item;
+			itemInventory[i][iIData.amount] = amount;
+
+			break;
+		}
+	}
+}
+
+//Function to remove a item from the player item inventory
+function remove_item(item, amount) {
+	//Loop through the inventory and find the item in it and remove from it but if we don't find it return false
+	var failed = true;
+	for (i = 0; i < array_length(itemInventory); i++) if (itemInventory[i][iIData.ID] == item) {
+		itemInventory[i][iIData.amount] -= amount;
+		failed = false;
+			
+		break;
+	}
+	
+	return failed;
+}
+
+//Add items FOR TESTING PURPOSES
+add_item(itemNames.potion, 4);
+add_item(itemNames.dmg, 3);
+
 
 
 

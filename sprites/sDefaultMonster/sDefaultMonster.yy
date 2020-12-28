@@ -68,8 +68,8 @@
     {"visible":true,"isLocked":false,"blendMode":0,"opacity":100.0,"displayName":"default","resourceVersion":"1.0","name":"45503604-14c1-41c9-88ab-908c11e23480","tags":[],"resourceType":"GMImageLayer",},
   ],
   "parent": {
-    "name": "Sprites",
-    "path": "folders/Sprites.yy",
+    "name": "NPCs",
+    "path": "folders/Sprites/NPCs.yy",
   },
   "resourceVersion": "1.0",
   "name": "sDefaultMonster",

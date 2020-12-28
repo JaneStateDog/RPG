@@ -6,7 +6,8 @@ canSelect = true; //false
 enum states {
 	select,
 	chooseAttack,
-	attacking
+	attacking,
+	itemMenu
 }
 
 //Define state
@@ -14,7 +15,7 @@ state = states.select
 
 
 //Define options
-selectOptions = ["Attack", "Defend", "Run"];
+selectOptions = ["Attack", "Defend", "Items", "Run"];
 
 
 //Define turn (this is the current member turn)
@@ -55,7 +56,7 @@ function fix_selected(number, dir) {
 
 
 //Define destination y variables
-normalScreenDest = 300;
+normalScreenDest = 290;
 belowScreenDest = 400;
 
 destinationY = normalScreenDest;

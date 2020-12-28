@@ -7,6 +7,7 @@ moveSpeed = 3; //Only use full digits
 moveDir = 0
 
 canMove = true;
+finishAnimation = false;
 
 
 //Define states

@@ -82,7 +82,7 @@ for (i = 1; i < string_length(messageToShow) + 1; i++) {
 	
 	//Use the modifiers2 to change the location of the drawing
 	var drawX = xToDraw;
-	var drawY = diaBoxY + 8 + (string_height(string_char_at(messageToShow, i - 1)) * lineOn);
+	var drawY = diaBoxY + 10 + (string_height(string_char_at(messageToShow, i - 1)) * lineOn);
 	switch (modifier2) {
 		case modifiers2.shaky: //Shaky
 			var pwr = 0.75;

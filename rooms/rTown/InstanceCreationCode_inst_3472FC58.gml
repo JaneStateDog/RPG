@@ -1,1 +1,0 @@
-messages = [["H-Help me...", "Poor soul", noone, 0]];

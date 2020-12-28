@@ -1,22 +1,18 @@
 //Depending on what the monster group we are fighting is then set things such as music and background
 var bg = layer_background_get_id(layer_get_id("Background"));
+layer_background_sprite(bg, sDefault); 
+
 switch (queuedMonsterGroup) {
-	case mobGroups.spider: //Spider
-		play_music(sndSpiderTheme);
-		layer_background_sprite(bg, sSpider);
-		
-		break;
-	
-	default: layer_background_blend(bg, c_black); break;
+	case mobGroups.spider: play_music(sndSpiderTheme); break; //Spider
 }
 
 
 
 //Lerp up to the proper spot
-y = lerp(y, destinationY, 0.08);
+y = lerp(y, destinationY, 0.10);
 
 //Lerp the platformer surface to the proper spot
-platSurfY = lerp(platSurfY, platSurDestY, 0.08);
+platSurfY = lerp(platSurfY, platSurDestY, 0.10);
 
 
 //Set turn
@@ -64,51 +60,54 @@ switch (state) {
 		destinationY = normalScreenDest;
 		
 	
-		if (canSelect and keySpacePressed) switch (selected) {
-			case 0: //Attack
-				//Make select sound effect
-				audio_sound_gain(audio_play_sound(sndSelect, 1, false), volume, 0);
+		if (canSelect and keySpacePressed) {
+			//Make select sound effect
+			audio_sound_gain(audio_play_sound(sndSelect, 1, false), volume, 0);
 			
-				//Switch to attack state
-				state = states.chooseAttack;
+			switch (selected) {
+				case 0: //Attack
+					//Switch to attack state
+					state = states.chooseAttack;
 				
-				//Fix selected to make sure it is not on top of dead monsters
-				fix_selected(array_length(monsterEntities), true);
+					//Fix selected to make sure it is not on top of dead monsters
+					fix_selected(array_length(monsterEntities), true);
 					
 					
-				//If there is only one monster then just go to attacking
-				if (array_length(monsterEntities) == 1) {
-					destinationY = belowScreenDest;
-					state = states.attacking;
-				}
+					//If there is only one monster then just go to attacking
+					if (array_length(monsterEntities) == 1) {
+						destinationY = belowScreenDest;
+						state = states.attacking;
+					}
 
-				break;
-			case 1: //Defend
-				//Make select sound effect
-				audio_sound_gain(audio_play_sound(sndSelect, 1, false), volume, 0);
-			
-				//Switch to attacking state and defend
-				player.defending = true;
-				state = states.attacking;
-				
-				//Fix selected to make sure it is not on top of dead monsters
-				for (i = 0; i < array_length(monsterEntities); i++) if (monsterEntities[i].HP > 0) {
-					selected = i;
 					break;
-				}
+				case 1: //Defend
+					//Switch to attacking state and defend
+					destinationY = belowScreenDest;
 				
-				//Change sprite to defending sprite
-				player.sprite_index = members[party[player.ID]][memberData.sprDefend];
+					player.defending = true;
+					state = states.attacking;
+				
+					//Fix selected to make sure it is not on top of dead monsters
+					for (i = 0; i < array_length(monsterEntities); i++) if (monsterEntities[i].HP > 0) {
+						selected = i;
+						break;
+					}
+				
+					//Change sprite to defending sprite
+					player.sprite_index = members[party[player.ID]][memberData.sprDefend];
 	
-				break;
-			case 2: //Run
-				//Make select sound effect
-				audio_sound_gain(audio_play_sound(sndSelect, 1, false), volume, 0);
-			
-				//Go to the main room
-				do_transition(transitions.fromBattle);
+					break;
+				case 2: //Items
+					//Open up new item UI
+					state = states.itemMenu;
+				
+					break;
+				case 3: //Run
+					//Go to the main room
+					do_transition(transitions.fromBattle);
 	
-				break;
+					break;
+			}
 		}
 		
 		break;
@@ -173,7 +172,7 @@ switch (state) {
 			
 		//Set some variables
 		var lerpSpeed = 0.1;
-		var range = 2;
+		var range = 1;
 			
 		//Depending on the attack state do different things
 		switch (attackState) {

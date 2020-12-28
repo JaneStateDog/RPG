@@ -1,5 +1,5 @@
 //Lerp the entity x
-entityX = lerp(entityX, destinationEntityX, 0.09);
+entityX = lerp(entityX, destinationEntityX, 0.095);
 
 //Allow the battle options menu to select if we've moved the entities into place
 var range = 1;

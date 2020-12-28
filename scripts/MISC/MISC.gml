@@ -60,3 +60,12 @@ function queue_dialogue(str, name, portrait, portraitIndex) {
 function play_music(song) {
 	if (!instance_exists(oMusicController)) instance_create_layer(0, 0, "Controllers", oMusicController).song = song;
 }
+
+//Function to turn on outline shader
+function outline_shader_set() {
+	shader_reset();
+	shader_set(shOutline);
+	
+	shader_set_uniform_f(upixelW, texelSize);
+	shader_set_uniform_f(upixelH, texelSize);
+}

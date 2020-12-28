@@ -61,13 +61,3 @@ enum modifiers {
 enum modifiers2 {
 	shaky
 }
-
-
-//Function to turn on outline shader
-function outline_shader_set() {
-	shader_reset();
-	shader_set(shOutline);
-	
-	shader_set_uniform_f(upixelW, texelSize);
-	shader_set_uniform_f(upixelH, texelSize);
-}

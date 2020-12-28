@@ -68,8 +68,8 @@
     {"visible":true,"isLocked":false,"blendMode":0,"opacity":100.0,"displayName":"default","resourceVersion":"1.0","name":"190490bc-5174-4ebf-92a6-9860d686131b","tags":[],"resourceType":"GMImageLayer",},
   ],
   "parent": {
-    "name": "Sprites",
-    "path": "folders/Sprites.yy",
+    "name": "NPCs",
+    "path": "folders/Sprites/NPCs.yy",
   },
   "resourceVersion": "1.0",
   "name": "sNPC",

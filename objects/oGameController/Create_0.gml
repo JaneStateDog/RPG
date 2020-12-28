@@ -40,6 +40,9 @@ alarm_set(0, 1);
 
 
 //Define volume variabkes
+globalvar masterVolume;
+masterVolume = 1;
+
 globalvar volume;
 volume = 0.75;
 
