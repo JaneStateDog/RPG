@@ -5,6 +5,3 @@ for (i = 0; i < num; i++) {
    audio_set_master_gain(info[? "index"], masterVolume);
    ds_map_destroy(info);
 }
-
-
-show_debug_message(itemInventory);

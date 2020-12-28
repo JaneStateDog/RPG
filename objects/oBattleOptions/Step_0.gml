@@ -8,11 +8,16 @@ switch (queuedMonsterGroup) {
 
 
 
+var lerpSpeed = 0.1; //Define lerp speed
+
 //Lerp up to the proper spot
-y = lerp(y, destinationY, 0.10);
+y = lerp(y, destinationY, lerpSpeed);
 
 //Lerp the platformer surface to the proper spot
-platSurfY = lerp(platSurfY, platSurDestY, 0.10);
+platSurfY = lerp(platSurfY, platSurDestY, lerpSpeed);
+
+//Lerp the item menu
+itemY = lerp(itemY, itemDestY, lerpSpeed);
 
 
 //Set turn
@@ -23,12 +28,14 @@ if (turn == -1) next_turn();
 //Get the limit for selected
 var number = 0;
 switch (state) {
+	case states.itemMenu: number = array_length(itemInventory); break;
 	case states.select: number = array_length(selectOptions); break;
 	case states.chooseAttack: number = array_length(monsterEntities); break;
 }
 
 //If pressing a key and not in attacking state then change selection using those keys and other fancy stuff
-if (canSelect) if ((keyDownPressed or keyLeftPressed or keyUpPressed or keyRightPressed) and state != states.attacking) {
+if (canSelect) if ((keyDownPressed or keyLeftPressed or keyUpPressed or keyRightPressed) and 
+				   (state == states.select or state == states.chooseAttack or (state == states.itemMenu and itemTransIn))) {
 	//Change selected depending on which keys are pressed
 	var dir = true;
 	if (keyDownPressed or keyLeftPressed) {
@@ -48,8 +55,9 @@ if (canSelect) if ((keyDownPressed or keyLeftPressed or keyUpPressed or keyRight
 
 
 //Get the current selected monster and player
-monster = 0;
-if (state != states.select) monster = monsterEntities[selected];
+if (state == states.chooseAttack or state == states.attacking) monster = monsterEntities[selected];
+else monster = 0;
+
 player = memberEntities[party[turn]];
 
 
@@ -100,6 +108,9 @@ switch (state) {
 				case 2: //Items
 					//Open up new item UI
 					state = states.itemMenu;
+					itemTransIn = true;
+					
+					selected = 0;
 				
 					break;
 				case 3: //Run
@@ -109,6 +120,36 @@ switch (state) {
 					break;
 			}
 		}
+		
+		break;
+		
+	case states.itemMenu: //The item menu for using items
+		//Depending on the transition state move different things
+		if (itemTransIn) {
+			//Move the item menu in, the battle options out, and the entities out
+			itemDestY = itemOnScreenDest; 			
+			destinationY = belowScreenDest;
+			oBattleEntityController.destinationEntityX = entityXOffScreen;
+		} else {
+			//Move the item menu out, the battle options in, and the entities in
+			itemDestY = itemOffScreenDest;
+			destinationY = normalScreenDest;
+			oBattleEntityController.destinationEntityX = oBattleEntityController.ogDestEntityX;
+			
+			//Once the item menu is gone then go back to the standard battle optioning selecting state
+			var range = 2;
+			if (in_range(itemY, itemDestY - range, itemDestY + range)) {
+				selected = 0;
+				state = states.select;
+				
+				break;
+			}
+		}
+		
+		
+		//On escape press starting leaving the item menu
+		if (keyEscapePressed) itemTransIn = false;
+		
 		
 		break;
 		
@@ -160,7 +201,7 @@ switch (state) {
 			
 			
 		//Send the other entities off the screen
-		oBattleEntityController.destinationEntityX = -256;
+		oBattleEntityController.destinationEntityX = entityXOffScreen;
 		
 		
 		//If we are running go to idle sprite (we don't do running sprite because it looks weird)

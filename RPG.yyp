@@ -14,6 +14,7 @@
     {"id":{"name":"oPlatSpikes","path":"objects/oPlatSpikes/oPlatSpikes.yy",},"order":5,},
     {"id":{"name":"sPixel","path":"sprites/sPixel/sPixel.yy",},"order":2,},
     {"id":{"name":"rLEController","path":"objects/rLEController/rLEController.yy",},"order":1,},
+    {"id":{"name":"sTestItem","path":"sprites/sTestItem/sTestItem.yy",},"order":0,},
     {"id":{"name":"oPlatExit","path":"objects/oPlatExit/oPlatExit.yy",},"order":4,},
     {"id":{"name":"tsDesert","path":"tilesets/tsDesert/tsDesert.yy",},"order":0,},
     {"id":{"name":"rOverworldTemplate","path":"rooms/rOverworldTemplate/rOverworldTemplate.yy",},"order":1,},
@@ -48,6 +49,7 @@
     {"id":{"name":"sMouthCatBite","path":"sprites/sMouthCatBite/sMouthCatBite.yy",},"order":1,},
     {"id":{"name":"sNameBoxSide","path":"sprites/sNameBoxSide/sNameBoxSide.yy",},"order":1,},
     {"id":{"name":"oBattleEntityController","path":"objects/oBattleEntityController/oBattleEntityController.yy",},"order":3,},
+    {"id":{"name":"sItems","path":"sprites/sItems/sItems.yy",},"order":1,},
     {"id":{"name":"sPlayerIdle","path":"sprites/sPlayerIdle/sPlayerIdle.yy",},"order":0,},
     {"id":{"name":"sDefault","path":"sprites/sDefault/sDefault.yy",},"order":0,},
     {"id":{"name":"s00Marker","path":"sprites/s00Marker/s00Marker.yy",},"order":0,},
@@ -142,6 +144,7 @@
     {"folderPath":"folders/Sprites/Player/Hitboxes.yy","order":5,"resourceVersion":"1.0","name":"Hitboxes","tags":[],"resourceType":"GMFolder",},
     {"folderPath":"folders/Sprites/General Menu.yy","order":15,"resourceVersion":"1.0","name":"General Menu","tags":[],"resourceType":"GMFolder",},
     {"folderPath":"folders/Sprites/Battle/UI.yy","order":3,"resourceVersion":"1.0","name":"UI","tags":[],"resourceType":"GMFolder",},
+    {"folderPath":"folders/Sprites/Items.yy","order":16,"resourceVersion":"1.0","name":"Items","tags":[],"resourceType":"GMFolder",},
   ],
   "AudioGroups": [
     {"targets":-1,"resourceVersion":"1.3","name":"audiogroup_default","resourceType":"GMAudioGroup",},

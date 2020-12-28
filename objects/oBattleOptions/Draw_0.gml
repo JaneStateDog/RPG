@@ -1,4 +1,3 @@
-//Draw self
 //Set outline shader
 shader_set(shOutline);
 shader_set_uniform_f(upixelW, texelSize);
@@ -6,6 +5,11 @@ shader_set_uniform_f(upixelH, texelSize);
 
 //Draw self
 draw_self();
+
+
+//If we have the item menu open then draw it
+if (state = states.itemMenu) draw_sprite(sItems, 0, room_width / 2, itemY);
+
 				
 //Reset shader
 shader_reset();
@@ -62,4 +66,35 @@ for (i = 0; i < array_length(monsterEntities); i++) if (monsterEntities[i].HP > 
 	
 	draw_text_outlined(monsterEntities[i].drawX - space - string_width(str2) - string_width(str), monsterEntities[i].drawY - 8, str, c_black, c_white);
 	draw_text_outlined(monsterEntities[i].drawX - space - string_width(str2), monsterEntities[i].drawY - 10, str2, c_black, monsterEntities[i].image_blend);
+}
+
+
+
+//Draw the items in the item menu is open
+if (state = states.itemMenu) {
+	var drawX = (room_width / 2) - (sprite_get_width(sItems) / 2);
+	var drawY = itemY - (sprite_get_height(sItems) / 2);
+
+
+	//Draw the items
+	for (i = 0; i < array_length(itemInventory); i++) {
+		var tempY = drawY + (16 * i) + 6;
+		
+		//Sprite and name
+		var spr = items[itemInventory[i][iIData.ID]][itemData.sprite];
+		draw_sprite(spr, 0, drawX + 6, tempY);
+		draw_text(drawX + sprite_get_width(spr) + 12, tempY, items[itemInventory[i][iIData.ID]][itemData.name]);
+		
+		//Item amount
+		var str = "x" + string(itemInventory[i][iIData.amount]);
+		draw_text(drawX + 112 - string_width(str), tempY, str);
+		
+		
+		//Item description
+		draw_text(drawX + 124, tempY, items[itemInventory[i][iIData.ID]][itemData.description]);
+	}
+	
+	
+	//Draw the selection icon
+	draw_text_outlined(drawX - 10, drawY + 6 + (16 * selected), ">", c_black, c_white);
 }

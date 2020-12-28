@@ -5,9 +5,9 @@ canSelect = true; //false
 //Define states enum
 enum states {
 	select,
+	itemMenu,
 	chooseAttack,
 	attacking,
-	itemMenu
 }
 
 //Define state
@@ -61,8 +61,24 @@ belowScreenDest = 400;
 
 destinationY = normalScreenDest;
 
+
 //Define platformer surface destination y variables
 platSurfAboveScreenDest = -platSurfHeight - 32;
 platSurfNormalScreenDest = room_height / 2;
 
 platSurDestY = platSurfAboveScreenDest;
+
+
+//Define entity x off screen
+entityXOffScreen = -256;
+
+
+//Define item menu transition state
+itemTransIn = true;
+
+//Define item menu destination variables
+itemOffScreenDest = -(room_height / 2);
+itemOnScreenDest = room_height / 2;
+
+itemDestY = itemOffScreenDest;
+itemY = itemDestY;

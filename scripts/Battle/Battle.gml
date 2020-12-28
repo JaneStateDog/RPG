@@ -182,8 +182,8 @@ function item_create(name, ID, spr, des, onlyInBattle) {
 }
 
 //Create items
-item_create("Potion", itemNames.potion, sPixel, "Heals 2 HP", false);
-item_create("Damage", itemNames.dmg, sPixel, "Does 2 damage to an enemy", true);
+item_create("Potion", itemNames.potion, sTestItem, "Heals 2 HP", false);
+item_create("Damage", itemNames.dmg, sTestItem, "Does 2 damage to an enemy", true);
 
 //Define item inventory (this holds what items are currently in the player's inventory)
 globalvar itemInventory;

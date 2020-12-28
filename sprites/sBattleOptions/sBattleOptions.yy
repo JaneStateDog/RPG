@@ -68,8 +68,8 @@
     {"visible":true,"isLocked":false,"blendMode":0,"opacity":100.0,"displayName":"default","resourceVersion":"1.0","name":"b0549a99-07e4-45de-be45-70b8042b6bdc","tags":[],"resourceType":"GMImageLayer",},
   ],
   "parent": {
-    "name": "Battle",
-    "path": "folders/Sprites/Battle.yy",
+    "name": "UI",
+    "path": "folders/Sprites/Battle/UI.yy",
   },
   "resourceVersion": "1.0",
   "name": "sBattleOptions",
