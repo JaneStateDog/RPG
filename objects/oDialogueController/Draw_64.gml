@@ -85,9 +85,9 @@ for (i = 1; i < string_length(messageToShow) + 1; i++) {
 	var drawY = diaBoxY + 10 + (string_height(string_char_at(messageToShow, i - 1)) * lineOn);
 	switch (modifier2) {
 		case modifiers2.shaky: //Shaky
-			var pwr = 0.75;
-			drawX += random_range(-pwr, pwr);
-			drawY += random_range(-pwr, pwr);
+			var pwr = 1.5;
+			drawX = lerp(drawX, drawX + random_range(-pwr, pwr), 0.65);
+			drawY = lerp(drawY, drawY + random_range(-pwr, pwr), 0.65);
 		
 			break;
 	}

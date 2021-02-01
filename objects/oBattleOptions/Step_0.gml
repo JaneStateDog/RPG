@@ -2,9 +2,7 @@
 var bg = layer_background_get_id(layer_get_id("Background"));
 layer_background_sprite(bg, sDefault); 
 
-switch (queuedMonsterGroup) {
-	case mobGroups.spider: play_music(sndSpiderTheme); break; //Spider
-}
+play_music(monsterGroupThemes[queuedMonsterGroup]);
 
 
 
@@ -124,6 +122,21 @@ switch (state) {
 		break;
 		
 	case states.itemMenu: //The item menu for using items
+		//On space use item
+		if (keySpacePressed) {
+			audio_sound_gain(audio_play_sound(sndSelect, 1, false), volume, 0);
+		
+			if (itemInventory[selected][iIData.amount] > 0) {
+				itemToBeUsed = itemInventory[selected][iIData.ID];
+			
+				remove_item(itemToBeUsed, 1);
+			
+				itemTransIn = false;
+				usingItem = true;
+			}
+		}
+		
+	
 		//Depending on the transition state move different things
 		if (itemTransIn) {
 			//Move the item menu in, the battle options out, and the entities out
@@ -133,14 +146,44 @@ switch (state) {
 		} else {
 			//Move the item menu out, the battle options in, and the entities in
 			itemDestY = itemOffScreenDest;
-			destinationY = normalScreenDest;
+			if (!usingItem) destinationY = normalScreenDest;
 			oBattleEntityController.destinationEntityX = oBattleEntityController.ogDestEntityX;
 			
 			//Once the item menu is gone then go back to the standard battle optioning selecting state
 			var range = 2;
 			if (in_range(itemY, itemDestY - range, itemDestY + range)) {
-				selected = 0;
-				state = states.select;
+				//If we're using an item instead of just closing the menu normally, then inact the using item animation stuff
+				if (!usingItem) {
+					selected = 0;
+					state = states.select; 
+				} else {
+					//Do item using animation
+					player.sprite_index = members[party[player.ID]][memberData.sprUseItem];
+					
+					//When item using animation is over do different things depending on the item being used
+					if (round(player.image_index) == sprite_get_number(player.sprite_index)) {
+						switch (itemToBeUsed) {
+							case itemNames.potion: //Potion
+								var HP = player.HP + 2;
+								if (members[party[player.ID]][memberData.maxHP] > HP) player.HP = HP;
+								
+								break;
+							case itemNames.dmg: //Damage
+								var tempMonster = -1;
+								while (tempMonster >= 0 and tempMonster < array_length(monsterEntities)) tempMonster = irandom(array_length(monsterEntities) - 1);
+							
+								player_attack(player, monsterEntities[tempMonster]);
+								
+								break;
+						}
+						
+						
+						//Reset the animation and the using item variable
+						player.sprite_index = members[party[player.ID]][memberData.sprIdle];
+						usingItem = false;
+					}
+					
+				}
 				
 				break;
 			}
@@ -148,7 +191,10 @@ switch (state) {
 		
 		
 		//On escape press starting leaving the item menu
-		if (keyEscapePressed) itemTransIn = false;
+		if (keyEscapePressed) {
+			audio_sound_gain(audio_play_sound(sndSelect, 1, false), volume, 0);
+			itemTransIn = false;
+		}
 		
 		
 		break;

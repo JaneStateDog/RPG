@@ -55,6 +55,10 @@ monster_create(mobs.mouthCat, 5, 1, 4, sMouthCatIdle, sMouthCatIdle, sMouthCatBi
 globalvar monsterGroups;
 monsterGroups = [];
 
+//Define monster group themes
+globalvar monsterGroupThemes;
+monsterGroupThemes = [];
+
 //Enum for monster groups
 enum mobGroups {
 	goblin,
@@ -65,16 +69,17 @@ enum mobGroups {
 }
 
 //Function to create monster groups (first argument is the ID for the group (reference mob groups enum above) and the rest of the arugments are the mob IDs for that group)
-function monster_group_create(ID) {
-	for (i = 0; i < argument_count - 1; i++) monsterGroups[ID][i] = argument[i + 1];
+function monster_group_create(ID, theme) {
+	monsterGroupThemes[ID] = theme; //Put the theme into the monster group theme list
+	for (i = 0; i < argument_count - 2; i++) monsterGroups[ID][i] = argument[i + 2];
 }
 
 //Create monster groups
-monster_group_create(mobGroups.goblin, mobs.goblin, mobs.goblin);
-monster_group_create(mobGroups.leg, mobs.leg, mobs.leg);
-monster_group_create(mobGroups.goblinLeg1, mobs.goblin, mobs.leg, mobs.goblin);
-monster_group_create(mobGroups.goblinLeg2, mobs.leg, mobs.goblin, mobs.leg);
-monster_group_create(mobGroups.spider, mobs.mouthCat, mobs.spider, mobs.mouthCat,);
+monster_group_create(mobGroups.goblin, sndSandsofTime, mobs.goblin, mobs.goblin);
+monster_group_create(mobGroups.leg, sndSandsofTime, mobs.leg, mobs.leg);
+monster_group_create(mobGroups.goblinLeg1, sndSandsofTime, mobs.goblin, mobs.leg, mobs.goblin);
+monster_group_create(mobGroups.goblinLeg2, sndSandsofTime, mobs.leg, mobs.goblin, mobs.leg);
+monster_group_create(mobGroups.spider, sndSpiderTheme, mobs.mouthCat, mobs.spider, mobs.mouthCat);
 
 
 
@@ -104,7 +109,8 @@ enum memberData {
 	sprIdle,
 	sprRun,
 	sprDefend,
-	sprAttack
+	sprAttack,
+	sprUseItem
 }
 
 //Define member names (enum to hold all members' names. Use this for indexing the members array)
@@ -114,7 +120,7 @@ enum memberNames {
 }
 
 //Function to create members
-function member_create(name, ID, level, maxHP, maxDef, maxStr, sprIdle, sprRun, sprDefend, sprAttack) {
+function member_create(name, ID, level, maxHP, maxDef, maxStr, sprIdle, sprRun, sprDefend, sprAttack, sprUseItem) {
 	members[ID][memberData.name] = name;
 	
 	if (level <= maxLevel) members[ID][memberData.level] = level; else members[ID][memberData.level] = 1;
@@ -130,11 +136,12 @@ function member_create(name, ID, level, maxHP, maxDef, maxStr, sprIdle, sprRun, 
 	members[ID][memberData.sprRun] = sprRun;
 	members[ID][memberData.sprDefend] = sprDefend;
 	members[ID][memberData.sprAttack] = sprAttack;
+	members[ID][memberData.sprUseItem] = sprUseItem;
 }
 
 //Create the members
-member_create("Player", memberNames.player, 1, 15, 2, 3.5, sPlayerIdle, sPlayerRun, sPlayerDefend, sPlayerSwordStrike);
-member_create("John", memberNames.John, 1, 10, 2, 2.5, sPlayerIdle, sPlayerRun, sPlayerDefend, sPlayerIdle); //Put John in FOR TESTING PURPOSES
+member_create("Player", memberNames.player, 1, 15, 2, 3.5, sPlayerIdle, sPlayerRun, sPlayerDefend, sPlayerSwordStrike, sPlayerUseItem);
+member_create("John", memberNames.John, 1, 10, 2, 2.5, sPlayerIdle, sPlayerRun, sPlayerDefend, sPlayerIdle, sPlayerUseItem); //Put John in FOR TESTING PURPOSES
 
 //Define party array (this array stores the current party)
 globalvar party;
@@ -183,7 +190,7 @@ function item_create(name, ID, spr, des, onlyInBattle) {
 
 //Create items
 item_create("Potion", itemNames.potion, sTestItem, "Heals 2 HP", false);
-item_create("Damage", itemNames.dmg, sTestItem, "Does 2 damage to an enemy", true);
+item_create("Damage", itemNames.dmg, sTestItem, "Does 1 attack to a random monster", true);
 
 //Define item inventory (this holds what items are currently in the player's inventory)
 globalvar itemInventory;
@@ -231,10 +238,12 @@ function add_item(item, amount) {
 
 //Function to remove a item from the player item inventory
 function remove_item(item, amount) {
-	//Loop through the inventory and find the item in it and remove from it but if we don't find it return false
+	//Loop through the inventory and find the item in it and remove from it but if we don't find it return false 
 	var failed = true;
 	for (i = 0; i < array_length(itemInventory); i++) if (itemInventory[i][iIData.ID] == item) {
 		itemInventory[i][iIData.amount] -= amount;
+		if (itemInventory[i][iIData.amount] < 0) itemInventory[i][iIData.amount] = -1;
+		
 		failed = false;
 			
 		break;

@@ -82,3 +82,7 @@ itemOnScreenDest = room_height / 2;
 
 itemDestY = itemOffScreenDest;
 itemY = itemDestY;
+
+//Define using item and item to be used
+usingItem = false;
+itemToBeUsed = -1;

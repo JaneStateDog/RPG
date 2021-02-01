@@ -21,8 +21,8 @@
     "path": "texturegroups/Default",
   },
   "swatchColours": null,
-  "gridX": 0,
-  "gridY": 0,
+  "gridX": 32,
+  "gridY": 32,
   "frames": [
     {"compositeImage":{"FrameId":{"name":"0b3c5bac-22eb-4e12-866c-ed6aa0bcdb35","path":"sprites/sTSDesert/sTSDesert.yy",},"LayerId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},"images":[
         {"FrameId":{"name":"0b3c5bac-22eb-4e12-866c-ed6aa0bcdb35","path":"sprites/sTSDesert/sTSDesert.yy",},"LayerId":{"name":"75ee47bd-e029-4fdb-b8cb-f4e106f858ab","path":"sprites/sTSDesert/sTSDesert.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},

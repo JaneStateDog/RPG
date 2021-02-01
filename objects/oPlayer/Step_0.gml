@@ -105,6 +105,12 @@ if (canMove) {
 	
 		instance_create_layer(0, 0, "Controllers", oGeneralMenuController);
 	}
+	
+	
+	
+	//If colliding with a warp then warp
+	var warp = instance_place(x, y, oWarp);
+	if (warp != noone and warp.destination != -1) room = warp.destination;
 } else if (finishAnimation) { //If we are supposed to finish the animation then finish it
 	if (round(image_index) == sprite_get_number(sprite_index)) finishAnimation = false;
 } else sprite_index = sPlayerIdle; //If not moving and not supposed to finish animation go idle

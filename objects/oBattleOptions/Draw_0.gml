@@ -83,11 +83,11 @@ if (state = states.itemMenu) {
 		//Sprite and name
 		var spr = items[itemInventory[i][iIData.ID]][itemData.sprite];
 		draw_sprite(spr, 0, drawX + 6, tempY);
-		draw_text(drawX + sprite_get_width(spr) + 12, tempY, items[itemInventory[i][iIData.ID]][itemData.name]);
+		draw_text(drawX + sprite_get_width(spr) + 10, tempY, items[itemInventory[i][iIData.ID]][itemData.name]);
 		
 		//Item amount
 		var str = "x" + string(itemInventory[i][iIData.amount]);
-		draw_text(drawX + 112 - string_width(str), tempY, str);
+		draw_text(drawX + 110 - string_width(str), tempY, str);
 		
 		
 		//Item description
